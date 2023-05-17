@@ -182,6 +182,7 @@ class IOComponent(Component):
         value: Any = None,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
         visible: bool = True,
@@ -204,6 +205,7 @@ class IOComponent(Component):
         self.info = info
         self.show_label = show_label
         self.interactive = interactive
+        self.tooltip = tooltip
 
         # load_event is set in the Blocks.attach_load_events method
         self.load_event: None | dict[str, Any] = None
@@ -344,6 +346,8 @@ class IOComponent(Component):
         }
         if self.info:
             config["info"] = self.info
+        if self.tooltip:
+            config["tooltip"] = self.tooltip
         return config
 
     @staticmethod
@@ -401,6 +405,7 @@ class Textbox(
         placeholder: str | None = None,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -418,6 +423,7 @@ class Textbox(
             placeholder: placeholder hint to provide behind textarea.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, will be rendered as an editable textbox; if False, editing will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -446,6 +452,7 @@ class Textbox(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -614,6 +621,7 @@ class Number(
         *,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -628,6 +636,7 @@ class Number(
             value: default value. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, will be editable; if False, editing will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -641,6 +650,7 @@ class Number(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -798,6 +808,7 @@ class Slider(
         step: float | None = None,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -815,6 +826,7 @@ class Slider(
             step: increment between slider values.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, slider will be adjustable; if False, adjusting will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -837,6 +849,7 @@ class Slider(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -973,6 +986,7 @@ class Checkbox(
         *,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -986,6 +1000,7 @@ class Checkbox(
             value: if True, checked by default. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, this checkbox can be checked; if False, checking will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -1003,6 +1018,7 @@ class Checkbox(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -1077,6 +1093,7 @@ class CheckboxGroup(
         type: str = "value",
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -1092,6 +1109,7 @@ class CheckboxGroup(
             type: Type of value to be returned by component. "value" returns the list of strings of the choices selected, "index" returns the list of indices of the choices selected.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, choices in this checkbox group will be checkable; if False, checking will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -1117,6 +1135,7 @@ class CheckboxGroup(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -1262,6 +1281,7 @@ class Radio(
         type: str = "value",
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -1277,6 +1297,7 @@ class Radio(
             type: Type of value to be returned by component. "value" returns the string of the choice selected, "index" returns the index of the choice selected.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, choices in this radio group will be selectable; if False, selection will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -1301,6 +1322,7 @@ class Radio(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -1427,6 +1449,7 @@ class Dropdown(
         max_choices: int | None = None,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -1445,6 +1468,7 @@ class Dropdown(
             max_choices: maximum number of choices that can be selected. If None, no limit is enforced.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, choices in this dropdown will be selectable; if False, selection will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -1484,6 +1508,7 @@ class Dropdown(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -2604,6 +2629,7 @@ class File(
         file_types: list[str] | None = None,
         type: str = "file",
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -2619,6 +2645,7 @@ class File(
             file_types: List of file extensions or types of files to be uploaded (e.g. ['image', '.json', '.mp4']). "file" allows any file to be uploaded, "image" allows only image files to be uploaded, "audio" allows only audio files to be uploaded, "video" allows only video files to be uploaded, "text" allows only text files to be uploaded.
             type: Type of value to be returned by component. "file" returns a temporary file object with the same base name as the uploaded file, whose full path can be retrieved by file_obj.name, "binary" returns an bytes object.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, will allow users to upload a file; if False, can only be used to display files. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -2659,6 +2686,7 @@ class File(
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -3297,6 +3325,7 @@ class Button(Clickable, IOComponent, StringSerializable):
         variant: str = "secondary",
         visible: bool = True,
         interactive: bool = True,
+        tooltip: str | None = None,
         elem_id: str | None = None,
         elem_classes: list[str] | str | None = None,
         **kwargs,
@@ -3309,6 +3338,7 @@ class Button(Clickable, IOComponent, StringSerializable):
             interactive: If False, the Button will be in a disabled state.
             elem_id: An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
+            tooltip: optional tooltip for the component.
         """
         IOComponent.__init__(
             self,
@@ -3317,6 +3347,7 @@ class Button(Clickable, IOComponent, StringSerializable):
             elem_classes=elem_classes,
             value=value,
             interactive=interactive,
+            tooltip=tooltip,
             **kwargs,
         )
         if variant == "plain":
@@ -3382,6 +3413,7 @@ class UploadButton(Clickable, Uploadable, IOComponent, FileSerializable):
     def __init__(
         self,
         label: str = "Upload a File",
+        tooltip: str | None = None,
         value: str | list[str] | Callable | None = None,
         *,
         visible: bool = True,
@@ -3418,6 +3450,7 @@ class UploadButton(Clickable, Uploadable, IOComponent, FileSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             visible=visible,
             elem_id=elem_id,
             elem_classes=elem_classes,
@@ -3544,6 +3577,7 @@ class ColorPicker(
         *,
         label: str | None = None,
         info: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         interactive: bool | None = None,
@@ -3557,6 +3591,7 @@ class ColorPicker(
             value: default text to provide in color picker. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
             info: additional component description.
+            tooltip: optional tooltip for component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             interactive: if True, will be rendered as an editable color picker; if False, editing will be disabled. If not provided, this is inferred based on whether the component is used as an input or output.
@@ -3569,6 +3604,7 @@ class ColorPicker(
             self,
             label=label,
             info=info,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             interactive=interactive,
@@ -3659,6 +3695,7 @@ class Label(Changeable, Selectable, IOComponent, JSONSerializable):
         *,
         num_top_classes: int | None = None,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -3672,6 +3709,7 @@ class Label(Changeable, Selectable, IOComponent, JSONSerializable):
             value: Default value to show in the component. If a str or number is provided, simply displays the string or number. If a {Dict[str, float]} of classes and confidences is provided, displays the top class on top and the `num_top_classes` below, along with their confidence bars. If callable, the function will be called whenever the app loads to set the initial value of the component.
             num_top_classes: number of most confident classes to show.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -3690,6 +3728,7 @@ class Label(Changeable, Selectable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -3806,6 +3845,7 @@ class HighlightedText(Changeable, Selectable, IOComponent, JSONSerializable):
         combine_adjacent: bool = False,
         adjacent_separator: str = "",
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -3820,6 +3860,7 @@ class HighlightedText(Changeable, Selectable, IOComponent, JSONSerializable):
             combine_adjacent: If True, will merge the labels of adjacent tokens belonging to the same category.
             adjacent_separator: Specifies the separator to be used between tokens if combine_adjacent is True.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -3843,6 +3884,7 @@ class HighlightedText(Changeable, Selectable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -3981,6 +4023,7 @@ class AnnotatedImage(Selectable, IOComponent, JSONSerializable):
         *,
         show_legend: bool = True,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -3993,6 +4036,7 @@ class AnnotatedImage(Selectable, IOComponent, JSONSerializable):
             value: Tuple of base image and list of (subsection, label) pairs.
             show_legend: If True, will show a legend of the subsections.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4009,6 +4053,7 @@ class AnnotatedImage(Selectable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -4166,6 +4211,7 @@ class JSON(Changeable, IOComponent, JSONSerializable):
         value: str | dict | list | Callable | None = None,
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4177,6 +4223,7 @@ class JSON(Changeable, IOComponent, JSONSerializable):
         Parameters:
             value: Default value. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4186,6 +4233,7 @@ class JSON(Changeable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -4257,6 +4305,7 @@ class HTML(Changeable, IOComponent, StringSerializable):
         value: str | Callable = "",
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4268,6 +4317,7 @@ class HTML(Changeable, IOComponent, StringSerializable):
         Parameters:
             value: Default value. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4277,6 +4327,7 @@ class HTML(Changeable, IOComponent, StringSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -4327,6 +4378,7 @@ class Gallery(IOComponent, GallerySerializable, Selectable):
         value: list[np.ndarray | _Image.Image | str | tuple] | Callable | None = None,
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4338,6 +4390,7 @@ class Gallery(IOComponent, GallerySerializable, Selectable):
         Parameters:
             value: List of images to display in the gallery by default. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4353,6 +4406,7 @@ class Gallery(IOComponent, GallerySerializable, Selectable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -4505,6 +4559,7 @@ class Chatbot(Changeable, Selectable, IOComponent, JSONSerializable):
         color_map: dict[str, str] | None = None,  # Parameter moved to Chatbot.style()
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4537,6 +4592,7 @@ class Chatbot(Changeable, Selectable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -4698,6 +4754,7 @@ class Model3D(
         *,
         clear_color: list[float] | None = None,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4710,6 +4767,7 @@ class Model3D(
             value: path to (.obj, glb, or .gltf) file to show in model3D viewer. If callable, the function will be called whenever the app loads to set the initial value of the component.
             clear_color: background color of scene
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4825,6 +4883,7 @@ class Plot(Changeable, Clearable, IOComponent, JSONSerializable):
         value: Callable | None | pd.DataFrame = None,
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         every: float | None = None,
         show_label: bool = True,
         visible: bool = True,
@@ -4836,6 +4895,7 @@ class Plot(Changeable, Clearable, IOComponent, JSONSerializable):
         Parameters:
             value: Optionally, supply a default plot object to display, must be a matplotlib, plotly, altair, or bokeh figure, or a callable. If callable, the function will be called whenever the app loads to set the initial value of the component.
             label: component name in interface.
+            tooltip: optional tooltip for the component.
             every: If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: if True, will display label.
             visible: If False, component will be hidden.
@@ -4845,6 +4905,7 @@ class Plot(Changeable, Clearable, IOComponent, JSONSerializable):
         IOComponent.__init__(
             self,
             label=label,
+            tooltip=tooltip,
             every=every,
             show_label=show_label,
             visible=visible,
@@ -5001,6 +5062,7 @@ class ScatterPlot(Plot):
             caption: The (optional) caption to display below the plot.
             interactive: Whether users should be able to interact with the plot by panning or zooming with their mouse or trackpad.
             label: The (optional) label to display on the top left corner of the plot.
+            tooltip: optional tooltip for the component.
             every:  If `value` is a callable, run the function 'every' number of seconds while the client connection is open. Has no effect otherwise. Queue must be enabled. The event can be accessed (e.g. to cancel it) via this component's .load_event attribute.
             show_label: Whether the label should be displayed.
             visible: Whether the plot should be visible.
@@ -6132,6 +6194,7 @@ class Dataset(Clickable, Selectable, Component, StringSerializable):
         self,
         *,
         label: str | None = None,
+        tooltip: str | None = None,
         components: list[IOComponent] | list[str],
         samples: list[list[Any]] | None = None,
         headers: list[str] | None = None,
@@ -6152,9 +6215,15 @@ class Dataset(Clickable, Selectable, Component, StringSerializable):
             visible: If False, component will be hidden.
             elem_id: An optional string that is assigned as the id of this component in the HTML DOM. Can be used for targeting CSS styles.
             elem_classes: An optional list of strings that are assigned as the classes of this component in the HTML DOM. Can be used for targeting CSS styles.
+            tooltip: optional tooltip for the component.
         """
         Component.__init__(
-            self, visible=visible, elem_id=elem_id, elem_classes=elem_classes, **kwargs
+            self,
+            visible=visible,
+            elem_id=elem_id,
+            elem_classes=elem_classes,
+            tooltip=tooltip,
+            **kwargs,
         )
         self.components = [get_component_instance(c, render=False) for c in components]
 

@@ -522,7 +522,6 @@ class Progress(Iterable):
 
 
 def create_tracker(root_blocks, event_id, fn, track_tqdm):
-
     progress = Progress(_callback=root_blocks._queue.set_progress, _event_id=event_id)
     if not track_tqdm:
         return progress, fn
