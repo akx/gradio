@@ -9,6 +9,7 @@
 
 	export let label: string = "ColorPicker";
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let elem_id: string = "";
 	export let elem_classes: Array<string> = [];
 	export let visible: boolean = true;
@@ -36,6 +37,7 @@
 		bind:value_is_output
 		{label}
 		{info}
+		{tooltip}
 		{show_label}
 		on:change
 		on:input

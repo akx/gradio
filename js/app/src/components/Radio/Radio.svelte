@@ -7,6 +7,7 @@
 
 	export let label: string = "Radio";
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let elem_id: string = "";
 	export let elem_classes: Array<string> = [];
 	export let visible: boolean = true;
@@ -33,6 +34,7 @@
 		bind:value_is_output
 		{label}
 		{info}
+		{tooltip}
 		{elem_id}
 		{show_label}
 		{choices}

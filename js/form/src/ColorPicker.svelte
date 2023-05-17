@@ -6,6 +6,7 @@
 	export let value_is_output: boolean = false;
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let disabled = false;
 	export let show_label: boolean = true;
 
@@ -31,7 +32,7 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="block">
 	<BlockTitle {show_label} {info}>{label}</BlockTitle>
-	<input type="color" on:blur bind:value {disabled} />
+	<input type="color" on:blur bind:value {disabled} title={tooltip} />
 </label>
 
 <style>

@@ -12,6 +12,7 @@
 	export let placeholder: string = "Type here...";
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let disabled = false;
 	export let show_label: boolean = true;
 	export let max_lines: number | false;
@@ -197,6 +198,7 @@
 			{placeholder}
 			rows={lines}
 			{disabled}
+			title={tooltip}
 			on:keypress={handle_keypress}
 			on:blur={handle_blur}
 			on:select={handle_select}

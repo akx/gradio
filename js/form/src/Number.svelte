@@ -7,6 +7,7 @@
 	export let disabled: boolean = false;
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let show_label: boolean = true;
 
 	const dispatch = createEventDispatcher<{
@@ -48,6 +49,7 @@
 	<BlockTitle {show_label} {info}>{label}</BlockTitle>
 	<input
 		type="number"
+		title={tooltip}
 		bind:value
 		on:keypress={handle_keypress}
 		on:blur={handle_blur}

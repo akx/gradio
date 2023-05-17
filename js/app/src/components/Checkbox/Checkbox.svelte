@@ -12,6 +12,7 @@
 	export let value_is_output: boolean = false;
 	export let label: string = "Checkbox";
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let mode: "static" | "dynamic";
 	export let style: Styles = {};
 	export let loading_status: LoadingStatus;
@@ -36,5 +37,6 @@
 		on:input
 		on:select
 		disabled={mode === "static"}
+		title={tooltip}
 	/>
 </Block>

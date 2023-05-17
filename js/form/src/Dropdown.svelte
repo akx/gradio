@@ -6,6 +6,7 @@
 	import type { SelectData } from "@gradio/utils";
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let value: string | Array<string> | undefined;
 	let old_value = Array.isArray(value) ? value.slice() : value;
 	export let value_is_output: boolean = false;
@@ -174,7 +175,7 @@
 <label>
 	<BlockTitle {show_label} {info}>{label}</BlockTitle>
 
-	<div class="wrap">
+	<div class="wrap" title={tooltip}>
 		<div class="wrap-inner" class:showOptions>
 			{#if multiselect && Array.isArray(value)}
 				{#each value as s}

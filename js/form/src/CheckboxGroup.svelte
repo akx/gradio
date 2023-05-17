@@ -12,6 +12,7 @@
 	export let disabled: boolean = false;
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let show_label: boolean;
 
 	const dispatch = createEventDispatcher<{
@@ -50,7 +51,7 @@
 
 <BlockTitle {show_label} {info}>{label}</BlockTitle>
 
-<div class="wrap" data-testid="checkbox-group">
+<div class="wrap" data-testid="checkbox-group" title={tooltip}>
 	{#each choices as choice}
 		<label
 			class:disabled

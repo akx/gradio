@@ -7,6 +7,7 @@
 
 	export let label: string = "Dropdown";
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let elem_id: string = "";
 	export let elem_classes: Array<string> = [];
 	export let visible: boolean = true;
@@ -45,6 +46,7 @@
 		{max_choices}
 		{label}
 		{info}
+		{tooltip}
 		{show_label}
 		{allow_custom_value}
 		on:change

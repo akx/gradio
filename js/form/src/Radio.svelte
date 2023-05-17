@@ -11,6 +11,7 @@
 	export let disabled: boolean = false;
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let show_label: boolean = true;
 	export let elem_id: string;
 
@@ -39,6 +40,7 @@
 <div class="wrap">
 	{#each choices as choice, i (i)}
 		<label
+			title={tooltip}
 			class:disabled
 			class:selected={value === choice}
 			style={item_container}

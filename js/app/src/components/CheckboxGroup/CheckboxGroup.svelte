@@ -15,6 +15,7 @@
 	export let mode: "static" | "dynamic";
 	export let label: string = "Checkbox Group";
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let show_label: boolean;
 
 	export let loading_status: LoadingStatus;
@@ -35,6 +36,7 @@
 		{choices}
 		{label}
 		{info}
+		{tooltip}
 		{style}
 		{show_label}
 		on:select

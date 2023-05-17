@@ -14,6 +14,7 @@
 	export let disabled: boolean = false;
 	export let label: string;
 	export let info: string | undefined = undefined;
+	export let tooltip: string | undefined = undefined;
 	export let show_label: boolean;
 
 	const id = `range_id_${_id++}`;
@@ -49,6 +50,7 @@
 			<BlockTitle {show_label} {info}>{label}</BlockTitle>
 		</label>
 		<input
+			title={tooltip}
 			data-testid="number-input"
 			type="number"
 			bind:value
