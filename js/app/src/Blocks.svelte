@@ -296,7 +296,8 @@
 					});
 
 					if (status.stage === "complete") {
-						dependencies.map(async (dep, i) => {
+						dependencies.forEach(async (dep, i) => {
+							// TODO: this does not await for the API calls to finish, is this a bug?
 							if (dep.trigger_after === fn_index) {
 								trigger_api_call(i);
 							}
@@ -306,7 +307,8 @@
 					}
 
 					if (status.stage === "error") {
-						dependencies.map(async (dep, i) => {
+						dependencies.forEach(async (dep, i) => {
+							// TODO: this does not await for the API calls to finish, is this a bug?
 							if (
 								dep.trigger_after === fn_index &&
 								!dep.trigger_only_on_success

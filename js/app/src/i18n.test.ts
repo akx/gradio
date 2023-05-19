@@ -11,12 +11,12 @@ describe("i18n", () => {
 	test("language codes follow the correct format", () => {
 		const langs = Object.entries(process_langs());
 
-		langs.forEach(([code, translation]) => {
+		for (const [code, translation] of langs) {
 			// must be "xx" or "xx-xx" -- http://4umi.com/web/html/languagecodes.php
 			const RE = /^([a-z]{2}-[a-zA-Z]{2}|[a-z]{2})$/;
 
 			assert.ok(RE.test(code));
 			assert.ok(translation.interface);
-		});
+		}
 	});
 });
