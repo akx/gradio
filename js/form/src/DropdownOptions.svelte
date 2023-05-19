@@ -46,6 +46,7 @@
 
 <div class="reference" bind:this={refElement} />
 {#if showOptions && !disabled}
+	<!-- svelte-ignore a11y-role-supports-aria-props -->
 	<ul
 		class="options"
 		aria-expanded={showOptions}
@@ -57,6 +58,7 @@
 		bind:this={listElement}
 	>
 		{#each filtered as choice}
+			<!-- svelte-ignore a11y-no-noninteractive-element-to-interactive-role -->
 			<li
 				class="item"
 				role="button"

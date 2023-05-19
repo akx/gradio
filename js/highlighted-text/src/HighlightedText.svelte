@@ -114,6 +114,7 @@
 		{/if}
 		<div class="textfield">
 			{#each value as [text, category], i}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<span
 					class="textspan"
 					style:background-color={category === null ||

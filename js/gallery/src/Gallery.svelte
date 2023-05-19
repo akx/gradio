@@ -158,6 +158,7 @@
 		>
 			<ModifyUpload on:clear={() => (selected_image = null)} />
 
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<img
 				on:click={() => (selected_image = next)}
 				src={_value[selected_image][0].data}

@@ -72,6 +72,7 @@
 		</svg>
 		<h1 class="font-semibold">workbench</h1>
 		<div class="flex self-end ml-auto cursor-pointer">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<p
 				on:click={() => (mode = "light")}
 				class="mr-2"
@@ -79,6 +80,7 @@
 			>
 				light
 			</p>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<p on:click={() => (mode = "dark")} class:font-bold={mode === "dark"}>
 				dark
 			</p>

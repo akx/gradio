@@ -471,6 +471,7 @@
 
 {#if api_docs_visible && ready}
 	<div class="api-docs">
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div
 			class="backdrop"
 			on:click={() => {

@@ -91,6 +91,7 @@
 
 	<div class="controls">
 		<div class="inner">
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<span class="icon" on:click={play_pause}>
 				{#if time === duration}
 					<Undo />
@@ -102,6 +103,8 @@
 			</span>
 
 			<span class="time">{format(time)} / {format(duration)}</span>
+
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<progress
 				value={time / duration || 0}
 				on:mousemove={handleMove}
@@ -109,6 +112,7 @@
 				on:click|stopPropagation|preventDefault={handle_click}
 			/>
 
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div class="icon" on:click={() => video.requestFullscreen()}>
 				<Maximise />
 			</div>

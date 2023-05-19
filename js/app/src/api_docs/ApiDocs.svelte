@@ -164,6 +164,7 @@
 			<div class="endpoint">
 				<div class="snippets">
 					{#each langs as [language, img]}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<li
 							class="snippet
 							{current_language === language ? 'current-lang' : 'inactive-lang'}"

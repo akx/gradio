@@ -270,6 +270,7 @@
 		<slot name="error" />
 		{#if message_visible}
 			<div class="toast">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<div
 					class="toast-body"
 					on:click|stopPropagation

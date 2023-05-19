@@ -544,6 +544,7 @@
 										header
 									/>
 
+									<!-- svelte-ignore a11y-click-events-have-key-events -->
 									<div
 										class:sorted={sort_by === i}
 										class:des={sort_by === i && sort_direction === "des"}
@@ -570,6 +571,7 @@
 					{#each data as row, i (row)}
 						<tr>
 							{#each row as { value, id }, j (id)}
+								<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
 								<td
 									tabindex="0"
 									bind:this={els[id].cell}

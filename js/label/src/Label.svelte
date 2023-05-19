@@ -25,6 +25,7 @@
 	</div>
 	{#if typeof value === "object" && value.confidences}
 		{#each value.confidences as confidence_set, i}
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<div
 				class="confidence-set group"
 				class:selectable

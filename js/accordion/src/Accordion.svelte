@@ -3,6 +3,7 @@
 	export let open: boolean = true;
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div on:click={() => (open = !open)} class="label-wrap" class:open>
 	<span>{label}</span>
 	<span style:transform={open ? "rotate(0)" : "rotate(90deg)"} class="icon">
