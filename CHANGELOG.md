@@ -10,6 +10,7 @@
 - Fixed bug where `gr.File(file_count='multiple')` could not be cached as output by [@freddyaboulton](https://github.com/freddyaboulton) in [PR 4421](https://github.com/gradio-app/gradio/pull/4421)
 - Restricts the domains that can be proxied via `/proxy` route  by [@abidlabs](https://github.com/abidlabs) in [PR 4406](https://github.com/gradio-app/gradio/pull/4406). 
 - Fix video rendering in Safari by [@aliabid94](https://github.com/aliabid94) in [PR 4433](https://github.com/gradio-app/gradio/pull/4433).
+- Various JavaScript cleanups, including potential bugfixes by [@akx](https://github.com/akx) in [PR XXXX](https://github.com/gradio-app/gradio/pull/XXXX).
 
 ## Other Changes:
 
