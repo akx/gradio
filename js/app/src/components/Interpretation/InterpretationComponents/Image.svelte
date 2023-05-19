@@ -64,7 +64,6 @@
 <div class="input-image">
 	<BlockTitle>{label}</BlockTitle>
 	<div class="image-preview">
-		<!-- svelte-ignore a11y-missing-attribute -->
 		<div class="interpretation">
 			<canvas bind:this={saliency_layer} />
 		</div>

@@ -23,8 +23,6 @@
 	});
 </script>
 
-<!-- svelte-ignore a11y-media-has-caption -->
-<!-- svelte-ignore a11y-mouse-events-have-key-events -->
 {#if playable()}
 	<video
 		muted

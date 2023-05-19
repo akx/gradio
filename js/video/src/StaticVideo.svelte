@@ -48,7 +48,6 @@
 {#if value === null}
 	<Empty size="large" unpadded_box={true}><Video /></Empty>
 {:else}
-	<!-- svelte-ignore a11y-media-has-caption -->
 	{#key value.data}
 		<Player
 			src={value.data}

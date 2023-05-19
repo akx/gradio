@@ -62,7 +62,6 @@
 {:else}
 	<ModifyUpload on:clear={handle_clear} />
 	{#if playable()}
-		<!-- svelte-ignore a11y-media-has-caption -->
 		<Player
 			src={value.data}
 			subtitle={subtitle?.data}
