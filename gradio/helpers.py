@@ -748,11 +748,44 @@ def make_waveform(
     if not os.path.isfile(audio_file):
         raise ValueError("Audio file not found.")
 
-    ffmpeg = shutil.which("ffmpeg")
-    if not ffmpeg:
-        raise RuntimeError("ffmpeg not found.")
+    tmp_img = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
 
-    duration = round(len(audio[1]) / audio[0], 4)
+    duration, img_size = _render_waveform(
+        audio=audio,
+        bg_color=bg_color,
+        bg_image=bg_image,
+        fg_alpha=fg_alpha,
+        bars_color=bars_color,
+        bar_count=bar_count,
+        bar_width=bar_width,
+        image_filename=tmp_img.name,
+    )
+
+    # Convert waveform to video with ffmpeg
+    output_mp4 = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
+    _convert_waveform_to_video(
+        image_filename=tmp_img.name,
+        audio_file=audio_file,
+        output_mp4=output_mp4.name,
+        image_size=img_size,
+        duration=duration,
+    )
+    return output_mp4.name
+
+
+def _render_waveform(
+    audio: tuple[int, np.ndarray],
+    *,
+    bg_color: str = "#f3f4f6",
+    bg_image: str | None = None,
+    fg_alpha: float = 0.75,
+    bars_color: str | tuple[str, str] = ("#fbbf24", "#ea580c"),
+    bar_count: int = 50,
+    bar_width: float = 0.6,
+    image_filename: str,
+) -> tuple[float, tuple[int, int]]:
+    sample_rate, samples = audio
+    duration = round(len(samples) / sample_rate, 4)
 
     # Helper methods to create waveform
     def hex_to_rgb(hex_str):
@@ -770,7 +803,6 @@ def make_waveform(
         ]
 
     # Reshape audio to have a fixed number of bars
-    samples = audio[1]
     if len(samples.shape) > 1:
         samples = np.mean(samples, 1)
     bins_to_pad = bar_count - (len(samples) % bar_count)
@@ -778,7 +810,6 @@ def make_waveform(
     samples = np.reshape(samples, (bar_count, -1))
     samples = np.abs(samples)
     samples = np.max(samples, 1)
-
     with utils.MatplotlibBackendMananger():
         plt.clf()
         # Plot waveform
@@ -796,14 +827,13 @@ def make_waveform(
         )
         plt.axis("off")
         plt.margins(x=0)
-        tmp_img = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
         savefig_kwargs: dict[str, Any] = {"bbox_inches": "tight"}
         if bg_image is not None:
             savefig_kwargs["transparent"] = True
         else:
             savefig_kwargs["facecolor"] = bg_color
-        plt.savefig(tmp_img.name, **savefig_kwargs)
-        waveform_img = PIL.Image.open(tmp_img.name)
+        plt.savefig(image_filename, **savefig_kwargs)
+        waveform_img = PIL.Image.open(image_filename)
         waveform_img = waveform_img.resize((1000, 200))
 
         # Composite waveform with background image
@@ -828,21 +858,32 @@ def make_waveform(
             composite.paste(
                 waveform_img, (0, composite_height - waveform_height), waveform_img
             )
-            composite.save(tmp_img.name)
-            img_width, img_height = composite.size
+            img_size = composite.size
+            composite.save(image_filename)
         else:
-            img_width, img_height = waveform_img.size
-            waveform_img.save(tmp_img.name)
+            img_size = waveform_img.size
+            waveform_img.save(image_filename)
+    return duration, img_size
 
-    # Convert waveform to video with ffmpeg
-    output_mp4 = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
 
-    ffmpeg_cmd = [
+def _convert_waveform_to_video(
+    *,
+    image_filename: str,
+    audio_file: str,
+    output_mp4: str,
+    image_size: tuple[int, int],
+    duration: float,
+) -> None:
+    ffmpeg = shutil.which("ffmpeg")
+    if not ffmpeg:
+        raise RuntimeError("ffmpeg not found.")
+    img_width, img_height = image_size
+    cmd = [
         ffmpeg,
         "-loop",
         "1",
         "-i",
-        tmp_img.name,
+        image_filename,
         "-i",
         audio_file,
         "-vf",
@@ -850,11 +891,9 @@ def make_waveform(
         "-t",
         str(duration),
         "-y",
-        output_mp4.name,
+        output_mp4,
     ]
-
-    subprocess.call(ffmpeg_cmd)
-    return output_mp4.name
+    subprocess.call(cmd)
 
 
 @document()
