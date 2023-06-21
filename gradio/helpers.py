@@ -4,6 +4,7 @@ Defines helper methods useful for loading and caching Interface examples.
 from __future__ import annotations
 
 import ast
+import contextlib
 import csv
 import inspect
 import os
@@ -737,39 +738,46 @@ def make_waveform(
     Returns:
         A filepath to the output video in mp4 format.
     """
-    if isinstance(audio, str):
-        audio_file = audio
-        audio = processing_utils.audio_from_file(audio)
-    else:
-        tmp_wav = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
-        processing_utils.audio_to_file(audio[0], audio[1], tmp_wav.name, format="wav")
-        audio_file = tmp_wav.name
+    with contextlib.ExitStack() as stack:
+        if isinstance(audio, str):
+            audio_file = audio
+            audio = processing_utils.audio_from_file(audio)
+        else:
+            tmp_wav = stack.enter_context(
+                tempfile.NamedTemporaryFile(prefix="gradio-waveform-", suffix=".wav")
+            )
+            processing_utils.audio_to_file(
+                audio[0], audio[1], tmp_wav.name, format="wav"
+            )
+            audio_file = tmp_wav.name
 
-    if not os.path.isfile(audio_file):
-        raise ValueError("Audio file not found.")
+        if not os.path.isfile(audio_file):
+            raise ValueError("Audio file not found.")
 
-    tmp_img = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
+        tmp_img = stack.enter_context(
+            tempfile.NamedTemporaryFile(prefix="gradio-waveform-", suffix=".png")
+        )
 
-    duration, img_size = _render_waveform(
-        audio=audio,
-        bg_color=bg_color,
-        bg_image=bg_image,
-        fg_alpha=fg_alpha,
-        bars_color=bars_color,
-        bar_count=bar_count,
-        bar_width=bar_width,
-        image_filename=tmp_img.name,
-    )
-
-    # Convert waveform to video with ffmpeg
-    output_mp4 = tempfile.NamedTemporaryFile(suffix=".mp4", delete=False)
-    _convert_waveform_to_video(
-        image_filename=tmp_img.name,
-        audio_file=audio_file,
-        output_mp4=output_mp4.name,
-        image_size=img_size,
-        duration=duration,
-    )
+        duration, img_size = _render_waveform(
+            audio=audio,
+            bg_color=bg_color,
+            bg_image=bg_image,
+            fg_alpha=fg_alpha,
+            bars_color=bars_color,
+            bar_count=bar_count,
+            bar_width=bar_width,
+            image_filename=tmp_img.name,
+        )
+        output_mp4 = tempfile.NamedTemporaryFile(
+            prefix="gradio-waveform-", suffix=".mp4", delete=False
+        )
+        _convert_waveform_to_video(
+            image_filename=tmp_img.name,
+            audio_file=audio_file,
+            output_mp4=output_mp4.name,
+            image_size=img_size,
+            duration=duration,
+        )
     return output_mp4.name
 
 
